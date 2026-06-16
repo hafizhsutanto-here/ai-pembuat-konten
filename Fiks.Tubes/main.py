@@ -36,7 +36,7 @@ class TampilBackgroundScrollable:
         self.bg_admin = self.load_bg("background_admin.png")
         
         # 2. Load Gambar Tombol Kustom (.png)
-        self.img_btn_admin = self.load_icon("button_admin.png", ukuran=(150, 80))
+        self.img_btn_admin = self.load_icon("button_admin.png", ukuran=(150, 100))
         self.img_btn_user = self.load_icon("button_user.png", ukuran=(150, 100))
         self.img_btn_login = self.load_icon("button_login_user.png", ukuran=(230, 40))
         self.img_btn_sort_real = self.load_icon("button_sort.png", ukuran=(125, 25))
@@ -89,7 +89,7 @@ class TampilBackgroundScrollable:
                         fieldbackground="#0B071E",
                         borderwidth=0,
                         relief="flat",
-                        font=("Segoe UI", 10))
+                        font=("Sf Pro Display medium", 10,"normal"))
         
         # Efek saat baris data dipilih/diklik
         style.map("Treeview", background=[("selected", "#3B0066")])
@@ -98,7 +98,7 @@ class TampilBackgroundScrollable:
         style.configure("Treeview.Heading",
                         background="#1A1235",
                         foreground="white",
-                        font=("Segoe UI", 10, "bold"),
+                        font=("Sf Pro Display medium", 10, "normal"),
                         borderwidth=0)
         
         # Mengatur warna dasar Combobox via Ttk Style
@@ -203,10 +203,10 @@ class TampilBackgroundScrollable:
         if self.bg_login:
             page_canvas.create_image(0, 0, image=self.bg_login, anchor="nw")
             
-        entry_user = tk.Entry(self.container, font=("Segoe UI", 11), bd=0, bg="white", fg="black")
+        entry_user = tk.Entry(self.container, font=("Sf Pro Display medium", 11,"bold"), bd=0, bg="white", fg="black")
         page_canvas.create_window(500, 728, window=entry_user, width=230, height=26)
         
-        entry_pass = tk.Entry(self.container, font=("Segoe UI", 11), show="*", bd=0, bg="white", fg="black")
+        entry_pass = tk.Entry(self.container, font=("Sf Pro Display medium", 11,"bold"), show="*", bd=0, bg="white", fg="black")
         page_canvas.create_window(500, 775, window=entry_pass, width=230, height=26)
 
         def proses_masuk_aplikasi():
@@ -220,7 +220,7 @@ class TampilBackgroundScrollable:
                 messagebox.showerror("Gagal", "Username atau Password Admin salah!")
 
         btn_submit = tk.Button(self.container, text="Masuk Admin ➔]", bg="#3B0066", fg="white", 
-                               font=("Segoe UI", 10, "bold"), bd=0, cursor="hand2", command=proses_masuk_aplikasi)
+                               font=("Sf Pro Display medium", 10, "normal"), bd=0, cursor="hand2", command=proses_masuk_aplikasi)
         page_canvas.create_window(500, 835, window=btn_submit, width=230, height=40)
 
         def aksi_klik_sakelar_login():
@@ -260,7 +260,7 @@ class TampilBackgroundScrollable:
         tabel_user = self.buat_tabel_scroll_konten(self.container, page_canvas, x=35, y=758, width=910, height=240)
         self.isi_data_ke_tabel(tabel_user, self.data_sekarang)
 
-        entry_cari = tk.Entry(self.container, font=("Segoe UI", 11), bd=0, bg="white", fg="black")
+        entry_cari = tk.Entry(self.container, font=("Sf Pro Display medium", 11,"normal"), bd=0, bg="white", fg="black")
         page_canvas.create_window(160, 700, window=entry_cari, width=250, height=17)
         
         def fungsi_pencarian_realtime(event):
@@ -273,15 +273,15 @@ class TampilBackgroundScrollable:
             
         entry_cari.bind("<KeyRelease>", fungsi_pencarian_realtime)
 
-        combo_kat = ttk.Combobox(self.container, values=["Semua Kategori", "tips", "lifestyle", "productivity", "education", "health", "fashion", "finance", "relationship"], state="readonly", font=("Segoe UI", 8))
+        combo_kat = ttk.Combobox(self.container, values=["Semua Kategori", "tips", "lifestyle", "productivity", "education", "health", "fashion", "finance", "relationship"], state="readonly", font=("Sf Pro Display medium", 8,"normal"))
         combo_kat.set("Semua Kategori")
         page_canvas.create_window(385, 702, window=combo_kat, width=155, height=20)
         
-        combo_urut = ttk.Combobox(self.container, values=["Likes", "Reposts", "Shares"], state="readonly", font=("Segoe UI", 8))
+        combo_urut = ttk.Combobox(self.container, values=["Likes", "Reposts", "Shares"], state="readonly", font=("Sf Pro Display medium", 8,"normal"))
         combo_urut.set("Likes")
         page_canvas.create_window(515, 702, window=combo_urut, width=85, height=20)
         
-        combo_arah = ttk.Combobox(self.container, values=["Terbesar → Terkecil", "Terkecil → Terbesar"], state="readonly", font=("Segoe UI", 8))
+        combo_arah = ttk.Combobox(self.container, values=["Terbesar → Terkecil", "Terkecil → Terbesar"], state="readonly", font=("Sf Pro Display medium", 8,"normal"))
         combo_arah.set("Terbesar → Terkecil")
         page_canvas.create_window(655, 702, window=combo_arah, width=165, height=20)
 
@@ -294,9 +294,9 @@ class TampilBackgroundScrollable:
                 
             key_map = {"Likes": "like", "Reposts": "posting_ulang", "Shares": "share"}
             sort_key = key_map[combo_urut.get()]
-            is_reverse = True if "Terbesar" in combo_arah.get() else False
+            is_reverse = (combo_arah.get() == "Terbesar → Terkecil")
             
-            self.data_sekarang = algoritma.selection_sort(data_filter, sort_key, reverse=is_reverse)
+            self.data_sekarang = algoritma.sort_data(data_filter, sort_key, reverse=is_reverse)
             self.isi_data_ke_tabel(tabel_user, self.data_sekarang)
 
         def jalankan_reset_data():
@@ -324,12 +324,12 @@ class TampilBackgroundScrollable:
             else: self.mode_aktif = "admin"; self.buka_halaman_login()
 
         if self.img_btn_user:
-            btn_user_nav1 = page_canvas.create_image(500, 260, image=self.img_btn_user, anchor="center")
+            btn_user_nav1 = page_canvas.create_image(500, 290, image=self.img_btn_user, anchor="center")
             page_canvas.tag_bind(btn_user_nav1, "<Button-1>", lambda event: navigasi_dari_user())
             page_canvas.tag_bind(btn_user_nav1, "<Enter>", lambda event: page_canvas.config(cursor="hand2"))
             page_canvas.tag_bind(btn_user_nav1, "<Leave>", lambda event: page_canvas.config(cursor=""))
 
-            btn_user_nav2 = page_canvas.create_image(90, 540, image=self.img_btn_user, anchor="center")
+            btn_user_nav2 = page_canvas.create_image(90, 560, image=self.img_btn_user, anchor="center")
             page_canvas.tag_bind(btn_user_nav2, "<Button-1>", lambda event: navigasi_dari_user())
             page_canvas.tag_bind(btn_user_nav2, "<Enter>", lambda event: page_canvas.config(cursor="hand2"))
             page_canvas.tag_bind(btn_user_nav2, "<Leave>", lambda event: page_canvas.config(cursor=""))
@@ -356,26 +356,26 @@ class TampilBackgroundScrollable:
         tag_var     = tk.StringVar(value="#explorepage")
         cap_var     = tk.StringVar()
 
-        entry_add_judul = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white",  textvariable=judul_var)
+        entry_add_judul = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white",  textvariable=judul_var)
         page_canvas.create_window(180, 744, window=entry_add_judul, width=120, height=18)
 
-        combo_add_kat = ttk.Combobox(self.container, textvariable=kat_var2, state="readonly", font=("Segoe UI", 10),
+        combo_add_kat = ttk.Combobox(self.container, textvariable=kat_var2, state="readonly", font=("Sf Pro Display medium", 10,"normal"),
                                      values=["tips", "lifestyle", "productivity", "education", "health", "fashion", "finance", "relationship"])
         page_canvas.create_window(390, 744, window=combo_add_kat, width=130, height=18)
 
-        entry_add_likes = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white",  textvariable=like_var)
+        entry_add_likes = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white",  textvariable=like_var)
         page_canvas.create_window(135, 787, window=entry_add_likes, width=50, height=18)
 
-        entry_add_shares = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white",  textvariable=share_var)
+        entry_add_shares = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white",  textvariable=share_var)
         page_canvas.create_window(278, 787, window=entry_add_shares, width=50, height=18)
 
-        entry_add_reposts = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white", textvariable=repost_var)
+        entry_add_reposts = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white", textvariable=repost_var)
         page_canvas.create_window(425, 787, window=entry_add_reposts, width=50, height=18)
 
-        entry_add_tags = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="white", fg="black",  textvariable=tag_var)
+        entry_add_tags = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="white", fg="black",  textvariable=tag_var)
         page_canvas.create_window(290, 827, window=entry_add_tags, width=310, height=18)
 
-        entry_add_caption = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="white", fg="black",  textvariable=cap_var)
+        entry_add_caption = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="white", fg="black",  textvariable=cap_var)
         page_canvas.create_window(285, 880, window=entry_add_caption, width=310, height=40)
 
         def simpan_konten_baru():
@@ -430,26 +430,26 @@ class TampilBackgroundScrollable:
         cap_edit_var    = tk.StringVar()
 
         # Mengubah bg menjadi ungu gelap (#190E3F) dan fg menjadi putih (white)
-        entry_edit_judul = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white",  textvariable=judul_edit_var)
+        entry_edit_judul = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white",  textvariable=judul_edit_var)
         page_canvas.create_window(650, 745, window=entry_edit_judul, width=120, height=18)
 
-        combo_edit_kat = ttk.Combobox(self.container, textvariable=kat_edit_var, state="readonly", font=("Segoe UI", 10),
+        combo_edit_kat = ttk.Combobox(self.container, textvariable=kat_edit_var, state="readonly", font=("Sf Pro Display medium", 10,"normal"),
                                       values=["tips", "lifestyle", "productivity", "education", "health", "fashion", "finance", "relationship"])
         page_canvas.create_window(860, 745, window=combo_edit_kat, width=130, height=18)
 
-        entry_edit_likes = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white",  textvariable=like_edit_var)
+        entry_edit_likes = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white",  textvariable=like_edit_var)
         page_canvas.create_window(615, 787, window=entry_edit_likes, width=50, height=18)
 
-        entry_edit_shares = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white",  textvariable=share_edit_var)
+        entry_edit_shares = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white",  textvariable=share_edit_var)
         page_canvas.create_window(753, 787, window=entry_edit_shares, width=50, height=18)
 
-        entry_edit_reposts = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="#190E3F", fg="white", textvariable=repost_edit_var)
+        entry_edit_reposts = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="#190E3F", fg="white", textvariable=repost_edit_var)
         page_canvas.create_window(900, 787, window=entry_edit_reposts, width=50, height=18)
 
-        entry_edit_tags = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="white", fg="black",  textvariable=tag_edit_var)
+        entry_edit_tags = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="white", fg="black",  textvariable=tag_edit_var)
         page_canvas.create_window(770, 827, window=entry_edit_tags, width=310, height=18)
 
-        entry_edit_caption = tk.Entry(self.container, font=("Segoe UI", 10), bd=0, bg="white", fg="black",  textvariable=cap_edit_var)
+        entry_edit_caption = tk.Entry(self.container, font=("Sf Pro Display medium", 10,"normal"), bd=0, bg="white", fg="black",  textvariable=cap_edit_var)
         page_canvas.create_window(770, 880, window=entry_edit_caption, width=310, height=40)
 
         def load_data_ke_form(*args):
