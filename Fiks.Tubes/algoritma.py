@@ -64,7 +64,7 @@ def binary_search(data, keyword):
     return -1
 
 def find_index_by_id(data, id):
-    """Sequential search by ID (aman meskipun data tidak terurut setelah delete/insert)."""
+    """Sequential search by ID"""
     for i, item in enumerate(data):
         if item['id'] == id:
             return i
