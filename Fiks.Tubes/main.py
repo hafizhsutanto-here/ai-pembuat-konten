@@ -42,7 +42,6 @@ class TampilBackgroundScrollable:
         self.img_btn_sort_real = self.load_icon("button_sort.png", ukuran=(125, 25))
         self.img_btn_reset_real = self.load_icon("button_reset.png", ukuran=(70, 25))
         
-        # 🌟 TAMBAHAN: Load Aset Tombol CRUD Admin Baru Kamu (Ukuran disesuaikan proporsional)
         self.img_btn_submit = self.load_icon("button_submit.png", ukuran=(128, 28))
         self.img_btn_delete = self.load_icon("button_delete.png", ukuran=(128, 28))
         
@@ -401,7 +400,6 @@ class TampilBackgroundScrollable:
             except ValueError:
                 messagebox.showerror("Error", "Likes, Shares, dan Reposts harus berupa angka!")
 
-        # 🌟 SESUAIKAN: Menggunakan gambar button_submit asli kustom kamu di form kiri
         if self.img_btn_submit:
             btn_add_save = page_canvas.create_image(253, 940, image=self.img_btn_submit, anchor="center")
             page_canvas.tag_bind(btn_add_save, "<Button-1>", lambda event: simpan_konten_baru())
@@ -502,14 +500,12 @@ class TampilBackgroundScrollable:
                 tag_edit_var.set(""); cap_edit_var.set("")
                 messagebox.showinfo("Terhapus", f"Konten ID {id_str} berhasil dihapus.")
 
-        # 🌟 SESUAIKAN: Menggunakan gambar button_submit asli kustom kamu di form kanan (Edit)
         if self.img_btn_submit:
             btn_edit_save = page_canvas.create_image(665, 940, image=self.img_btn_submit, anchor="center")
             page_canvas.tag_bind(btn_edit_save, "<Button-1>", lambda event: simpan_edit())
             page_canvas.tag_bind(btn_edit_save, "<Enter>", lambda event: page_canvas.config(cursor="hand2"))
             page_canvas.tag_bind(btn_edit_save, "<Leave>", lambda event: page_canvas.config(cursor=""))
 
-        # 🌟 SESUAIKAN: Menggunakan gambar button_delete asli kustom kamu di form kanan (Hapus)
         if self.img_btn_delete:
             btn_edit_delete = page_canvas.create_image(812, 940, image=self.img_btn_delete, anchor="center")
             page_canvas.tag_bind(btn_edit_delete, "<Button-1>", lambda event: hapus_konten())
